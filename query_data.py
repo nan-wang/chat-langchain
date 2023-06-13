@@ -5,9 +5,9 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.chat_vector_db.prompts import (CONDENSE_QUESTION_PROMPT,
                                                      QA_PROMPT)
 from langchain.chains.llm import LLMChain
-from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 from langchain.vectorstores.base import VectorStore
+from langchain.chains.question_answering import load_qa_chain
 
 
 def get_chain(
@@ -46,10 +46,11 @@ def get_chain(
     )
 
     qa = ConversationalRetrievalChain(
-        vectorstore=vectorstore.as_retriever(),
+        retriever=vectorstore.as_retriever(),
         combine_docs_chain=doc_chain,
         question_generator=question_generator,
         callback_manager=manager,
-        return_source_documents=True
+        return_source_documents=True,
+        verbose=True
     )
     return qa
